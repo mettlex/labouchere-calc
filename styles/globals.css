@@ -1,0 +1,222 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  overflow: auto;
+}
+
+.main .title {
+  color: darkslategrey;
+}
+
+.main .container {
+  margin: 10px 0 0 0;
+  max-width: 90vw;
+  max-height: 70vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  min-height: 0px;
+  gap: 10px;
+}
+
+.main .container .inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  border: 0;
+  border-radius: 50%;
+  padding: 35px;
+  height: 3em;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  gap: 15px;
+}
+
+.main .container .output {
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 90vw;
+  gap: 10px;
+}
+
+.main .container .output .box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.5rem;
+  padding: 0.5rem;
+  margin: 0 0 20px 0;
+  border: 2px solid black;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.main .container .inputs .box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 2.5em;
+  width: 6em;
+  padding: 0.5em;
+  border: 2px solid black;
+  cursor: pointer;
+}
+
+.main .container .output .green {
+  color: green;
+  border: 2px solid lightgreen;
+}
+
+.main .container .output .red {
+  color: darkred;
+  border: 2px solid red;
+}
+
+.main .container .inputs .green {
+  color: limegreen;
+}
+
+.main .container .inputs .red {
+  color: red;
+}
+
+.arrow {
+  margin-top: 8px;
+  margin-left: 14px;
+  margin-right: 1.2px;
+  display: inline-block;
+  height: 6px;
+  position: relative;
+  width: 6px;
+}
+.arrow::after {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-right-style: solid;
+  border-right-width: 2px;
+  content: "";
+  display: inline-block;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+.arrow.is-triangle::after {
+  border-style: solid;
+  border-width: 0 0 6px 6px;
+  height: 0;
+  width: 0;
+}
+.arrow.is-check::after {
+  width: 6px;
+}
+.arrow.arrow-bar::before {
+  bottom: 1px;
+  content: "";
+  height: 20px;
+  position: absolute;
+  right: 0;
+  transform-origin: bottom;
+  width: 2px;
+  transform: rotate(-45deg);
+}
+.arrow.is-top {
+  transform: rotate(225deg);
+}
+.arrow.is-right {
+  transform: rotate(315deg);
+}
+.arrow.is-bottom {
+  transform: rotate(45deg);
+}
+.arrow.is-left {
+  transform: rotate(135deg);
+}
+
+.arrow.is-triangle::after,
+.arrow .arrow.is-triangle::after {
+  border-color: transparent;
+  border-bottom-color: lightgrey;
+}
+.arrow::before,
+.arrow .arrow::before {
+  background-color: lightgrey;
+}
+
+.arrow.is-triangle.green-arrow::after,
+.arrow .arrow.is-triangle.green-arrow::after {
+  border-color: transparent;
+  border-bottom-color: lightgreen;
+}
+.arrow.green-arrow::before,
+.arrow.green-arrow.arrow::before {
+  background-color: lightgreen;
+}
+
+.arrow.is-triangle.red-arrow::after,
+.arrow .arrow.is-triangle.red-arrow::after {
+  border-color: transparent;
+  border-bottom-color: red;
+}
+.arrow.red-arrow::before,
+.arrow.red-arrow.arrow::before {
+  background-color: red;
+}
+
+.footer {
+  color: dimgrey;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.box sub {
+  font-size: 45%;
+}
+
+.p-next {
+  font-size: 70%;
+}
+
+.win-loss {
+  margin-top: 10px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 5px;
+  overflow-y: auto;
+  max-height: 15vh;
+}
