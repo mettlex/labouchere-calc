@@ -82,6 +82,7 @@ export const getSequence = ({
   }
 
   let labouchereSequence = labouchereArray
+    .filter((x) => !isNaN(x))
     .reverse()
     .reduce((s, x) => `${x}-${s}`, "");
 

@@ -211,6 +211,7 @@ body {
 }
 
 .win-loss {
+  color: grey;
   margin-top: 10px;
   font-size: 12px;
   display: flex;
@@ -219,4 +220,8 @@ body {
   column-gap: 5px;
   overflow-y: auto;
   max-height: 15vh;
+}
+
+.sequence {
+  color: goldenrod;
 }

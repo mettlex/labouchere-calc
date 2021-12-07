@@ -14,10 +14,11 @@ const Home: NextPage = () => {
   const [unit, setUnit] = useState<number>(0);
   const [winAmount, setWinAmount] = useState<number>(0);
   const [expectedLosses, setExpectedLosses] = useState<number>(0);
+  const [adjustedBalances, setAdjustedBalances] = useState<number[]>([]);
 
   const {
     labouchereSequence,
-    balance: currentBalance,
+    balance: resultBalance,
     win,
     loss,
     movesLeft,
@@ -39,6 +40,9 @@ const Home: NextPage = () => {
       return "";
     }, ""),
   });
+
+  const currentBalance =
+    resultBalance + adjustedBalances.reduce((sum, x) => sum + x, 0);
 
   const handleBoxClick = (name: "Won" | "Lost") => {
     setBoxes([
@@ -267,24 +271,58 @@ const Home: NextPage = () => {
           </div>
 
           <div className="output" ref={outputRef}>
-            <div>{labouchereSequence}</div>
+            {(!isNaN(currentBalance) &&
+              !isNaN(bet) &&
+              currentBalance - winAmount < balance && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    flexWrap: "wrap",
+                    gap: "5px",
+                  }}
+                >
+                  <div className="sequence">{labouchereSequence}</div>
 
-            {!isNaN(currentBalance) && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  flexWrap: "wrap",
-                  gap: "5px",
-                }}
-              >
-                <div>Current Balance: {currentBalance.toLocaleString()}</div>
-                <div>Won: {win}</div>
-                <div>Lost: {loss}</div>
-                <div>Moves Left: {movesLeft}</div>
-                <div>Next Bet: {bet}</div>
-              </div>
-            )}
+                  <div>
+                    Current Balance: {currentBalance.toLocaleString()}{" "}
+                    <a
+                      href="#"
+                      style={{ textDecoration: "none", color: "dimgrey" }}
+                      onClick={(event) => {
+                        event.preventDefault();
+
+                        const answer = prompt(
+                          "Add (+) or Deduct (-) from the current balance. Current Balance = Balance + Adjusted Amount",
+                        );
+
+                        if (!answer) {
+                          return;
+                        }
+
+                        const amount = parseInt(answer);
+
+                        if (isNaN(amount)) {
+                          return;
+                        }
+
+                        adjustedBalances.push(amount);
+
+                        setAdjustedBalances([...adjustedBalances]);
+                      }}
+                    >
+                      (Adjust)
+                    </a>
+                  </div>
+                  <div>Won: {win}</div>
+                  <div>Lost: {loss}</div>
+                  <div>Moves Left: {movesLeft}</div>
+                  <div>
+                    Next Bet: <b>{bet}</b>
+                  </div>
+                </div>
+              )) ||
+              (win > 0 ? "Congrats!" : "")}
           </div>
 
           <div className="inputs">
