@@ -15,6 +15,32 @@ const Home: NextPage = () => {
   const [winAmount, setWinAmount] = useState<number>(0);
   const [expectedLosses, setExpectedLosses] = useState<number>(0);
   const [adjustedBalances, setAdjustedBalances] = useState<number[]>([]);
+  const [betSequence, setBetSequence] = useState<string>("");
+  const [nextMove, setNextMove] = useState<string>("");
+
+  useEffect(() => {
+    const betSequenceArray = betSequence.split(/\s/);
+
+    let k = 0;
+    let move = betSequenceArray[0];
+
+    for (let i = 0; i < boxes.length; i++) {
+      const { name } = boxes[i];
+
+      if (name.toLowerCase() === "lost") {
+        const current = betSequenceArray[++k];
+
+        if (current) {
+          move = current;
+        } else {
+          k = 0;
+          move = betSequenceArray[k];
+        }
+      }
+    }
+
+    setNextMove(move);
+  }, [betSequence, boxes]);
 
   const {
     labouchereSequence,
@@ -62,7 +88,7 @@ const Home: NextPage = () => {
     const tid2 = setTimeout(() => {
       setStoredBoxes(boxes);
       clearTimeout(tid2);
-    }, 1000);
+    }, 500);
   };
 
   return (
@@ -262,6 +288,32 @@ const Home: NextPage = () => {
                 }}
               />
             </Box>
+
+            <Box
+              component="form"
+              sx={{
+                "& > :not(style)": { m: 1, width: "95%" },
+              }}
+              noValidate
+              autoComplete="on"
+              onSubmit={(event: FormEvent) => {
+                event.preventDefault();
+                return false;
+              }}
+            >
+              <TextField
+                type="text"
+                label="Bet Sequence"
+                placeholder="optional"
+                color="info"
+                size="small"
+                value={betSequence}
+                focused
+                onChange={(event) => {
+                  setBetSequence(event.target.value);
+                }}
+              />
+            </Box>
           </div>
 
           <div className="win-loss" ref={winlossRef}>
@@ -318,7 +370,19 @@ const Home: NextPage = () => {
                   <div>Lost: {loss}</div>
                   <div>Moves Left: {movesLeft}</div>
                   <div>
-                    Next Bet: <b>{bet}</b>
+                    Next Bet:{" "}
+                    <b>
+                      {bet}{" "}
+                      {(nextMove && (
+                        <>
+                          <span>on </span>
+                          <span style={{ color: nextMove.toLowerCase() }}>
+                            {nextMove}
+                          </span>
+                        </>
+                      )) ||
+                        ""}
+                    </b>
                   </div>
                 </div>
               )) ||
